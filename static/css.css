@@ -1,0 +1,110 @@
+/*button {*/
+    /*display: inline-block;*/
+    /*padding: 100px;*/
+/*}*/
+
+#id-h1 {
+    background: red;
+    display: inline;
+}
+.test-h1 {
+    background: brown;
+}
+
+h1 {
+    background: yellow;
+}
+
+.test-square {
+    /* color: red;
+    position: relative;
+    top: -10px;
+    left: -5px; */
+    position: relative;
+    top: -10px;
+    left: -5px;
+    color: red;
+}
+
+div {
+    outline: 1px red dashed;
+}
+
+.test-absolute {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: green;
+}
+
+.test-relative {
+    color: red;
+    position: relative;
+    height: 100px;
+}
+
+
+.test-fixed {
+    position: fixed;
+    background: blue;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+}
+
+.test-box {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    padding: 10px 10px 10px 10px;
+    border: 10px red solid;
+    /* outline: 10px red solid; */
+    margin: 20px;
+}
+
+.test-big-box {
+    border: 10px red solid;
+}
+
+body {
+    /*background-color: chartreuse;*/
+    /* background-image: url(doge.gif);*/
+     background-repeat: no-repeat;
+}
+
+
+.test-right {
+    float: right;
+}
+
+.test-left {
+    float: left;
+}
+
+.test-center-block {
+    margin: 0 auto;
+}
+
+
+.test-center-inline {
+    text-align: center;
+}
+
+.test-vertical-center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.test-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+
+}
+
+.test-staic {
+    height: 200px;
+}
+

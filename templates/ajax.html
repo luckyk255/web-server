@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="/static?file=test.js"></script>
+<script>
+    var callback = function (response) {
+        log('callback 拿到了响应', response)
+    }
+
+    ajax('GET', '/login/view', '', callback)
+    log('ajax 之后的 log')
+    //
+    // ajax_async()
+    // log('dasd')
+    //
+    // r = ajax_sync()
+    // log('dasd', r)
+</script>
+</html>
