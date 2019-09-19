@@ -35,7 +35,7 @@ class User(SQLModel):
         form = dict(
             role=UserRole.guest,
             # role='guest',
-            username='【游客】',
+            username='Visitor',
             id=-1,
         )
         u = User(form)

@@ -8,9 +8,6 @@ from models.session import Session
 
 
 def template(name):
-    """
-    根据名字读取 templates 文件夹里的一个文件并返回
-    """
     path = 'templates/' + name
     with open(path, 'r', encoding='utf-8') as f:
         return f.read()
@@ -25,20 +22,11 @@ def current_user(request):
         return User.guest()
 
 
-# noinspection PyUnusedLocal
 def error(request):
-    """
-    根据 code 返回不同的错误响应
-    目前只有 404
-    """
     return b'HTTP/1.x 404 NOT FOUND\r\n\r\n<h1>NOT FOUND</h1>'
 
 
 def response_with_headers(headers, code=200):
-    """
-    Content-Type: text/html
-    Set-Cookie: user=gua
-    """
     header = 'HTTP/1.x {} VERY OK\r\n'.format(code)
     header += ''.join([
         '{}: {}\r\n'.format(k, v) for k, v in headers.items()
@@ -47,11 +35,6 @@ def response_with_headers(headers, code=200):
 
 
 def redirect(url, result='', headers=None):
-    """
-    浏览器在收到 302 响应的时候
-    会自动在 HTTP header 里面找 Location 字段并获取一个 url
-    然后自动请求新的 url
-    """
     if len(result) > 0:
         formatted_url = '{}?result={}'.format(
             url, result
@@ -64,11 +47,6 @@ def redirect(url, result='', headers=None):
     if isinstance(headers, dict):
         h.update(headers)
 
-    # 增加 Location 字段并生成 HTTP 响应返回
-    # 注意, 没有 HTTP body 部分
-    # HTTP 1.1 302 ok
-    # Location: /todo
-    #
     r = response_with_headers(h, 302) + '\r\n'
     return r.encode()
 
@@ -94,14 +72,9 @@ def json_response(data):
 
 
 def login_required(route_function):
-    """
-    response = login_required(route_edit)
-    response(request)
-    这个函数看起来非常绕
-    所以暂时不懂也没关系
-    就直接复制粘贴拿来用就好了
-    """
+    
     def f(request):
+        log('用户登录权限认证')
         log('login_required', route_function)
         u = current_user(request)
         if u.is_guest():
@@ -113,9 +86,7 @@ def login_required(route_function):
 
 
 def _initialized_environment():
-    # 创建一个加载器, jinja2 会从这个目录中加载模板
     loader = FileSystemLoader('templates')
-    # 用加载器创建一个环境, 有了它才能读取模板文件
     e = Environment(loader=loader)
     return e
 

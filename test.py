@@ -8,13 +8,11 @@ from models.weibo import Weibo
 from utils import random_string
 
 
-# noinspection SqlNoDataSourceInspection,SqlResolve
 def test():
     connection = pymysql.connect(
         host='localhost',
         user='root',
         password='tk1998',
-        # db='web8',
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )

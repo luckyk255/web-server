@@ -11,9 +11,6 @@ from utils import log
 
 
 def index(request):
-    """
-    weibo 首页的路由函数
-    """
     u = current_user(request)
     if request.method == 'GET':
         log('index GET 方法', request.query)
@@ -26,14 +23,11 @@ def index(request):
         user_id = request.form()
     u = User.one(id=user_id)
     weibos = Weibo.all(user_id=u.id)
-    # 替换模板文件中的标记字符串
     return html_response('weibo_index.html', weibos=weibos, user=u)
 
 
 def add(request):
-    """
-    用于增加新 weibo 的路由函数
-    """
+
     u = current_user(request)
     form = request.form()
     log('add request.form()', form)
@@ -60,16 +54,11 @@ def edit(request):
 
 
 def update(request):
-    """
-    用于增加新 weibo 的路由函数
-    """
     form = request.form()
     log('update data', form)
     weibo_id = int(form['weibo_id'])
     weibo_content = form['content']
     Weibo.update(weibo_id, content=weibo_content)
-    # 浏览器发送数据过来被处理后, 重定向到首页
-    # 浏览器在请求新首页的时候, 就能看到新增的数据了
     return redirect('/weibo/index')
 
 
@@ -95,24 +84,13 @@ def comment_edit(request):
 
 
 def comment_update(request):
-    """
-    用于增加新 weibo 的路由函数
-    """
     form = request.form()
     comment_id = int(form['comment_id'])
     Comment.update(comment_id, content=form['content'])
-    # 浏览器发送数据过来被处理后, 重定向到首页
-    # 浏览器在请求新首页的时候, 就能看到新增的数据了
     return redirect('/weibo/index')
 
 
 def weibo_owner_required(route_function):
-    """
-    这个函数看起来非常绕，所以你不懂也没关系
-    就直接拿来复制粘贴就好了
-    """
-
-    # noinspection DuplicatedCode
     def f(request):
         log('weibo_owner_required')
         u = current_user(request)
@@ -135,12 +113,6 @@ def weibo_owner_required(route_function):
 
 
 def comment_owner_required(route_function):
-    """
-    这个函数看起来非常绕，所以你不懂也没关系
-    就直接拿来复制粘贴就好了
-    """
-
-    # noinspection DuplicatedCode
     def f(request):
         log('comment_owner_required')
         u = current_user(request)
@@ -198,11 +170,6 @@ def comment_or_weibo_owner_required(route_function):
 
 
 def route_dict():
-    """
-    路由字典
-    key 是路由(路由就是 path)
-    value 是路由处理函数(就是响应)
-    """
     d = {
         '/weibo/index': login_required(index),
         '/weibo/add': login_required(add),

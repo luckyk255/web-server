@@ -9,13 +9,11 @@ from routes.routes_basic import (
 )
 from routes.routes_public import route_dict
 
-# 用 from import as 来避免重名
 from routes.routes_todo import route_dict as routes_todo
 from routes.routes_ajax_todo import route_dict as routes_ajax_todo
 from routes.routes_weibo import route_dict as routes_weibo
 
 
-# 定义一个 class 用于保存请求的数据
 class Request(object):
     def __init__(self, raw_data):
         # 只能 split 一次，因为 body 中可能有换行
@@ -84,11 +82,6 @@ class Request(object):
 
 
 def response_for_path(request):
-    """
-    根据 path 调用相应的处理函数
-    没有处理的 path 会返回 404
-    """
-    # 注册外部的路由
     r = route_dict()
     r.update(routes_todo())
     r.update(routes_ajax_todo())
@@ -103,7 +96,6 @@ def request_from_connection(connection):
     while True:
         r = connection.recv(buffer_size)
         request += r
-        # 取到的数据长度不够 buffer_size 的时候，说明数据已经取完了。
         if len(r) < buffer_size:
             return request
 
@@ -114,9 +106,7 @@ def process_connection(connection):
         log('http 请求:<\n{}\n>'.format(r.decode()))
         r = r.decode()
         if len(r) > 0:
-            # 把原始请求数据传给 Request 对象
             request = Request(r)
-            # 用 response_for_path 函数来得到 path 对应的响应内容
             response = response_for_path(request)
             index = response.find(b'Content-Type: text/html')
             if index == -1:
@@ -126,24 +116,15 @@ def process_connection(connection):
                 log('http 响应头部: <{}> 内容长度：<{}>'.format(gif_header, gif_length))
             else:
                 log("http 响应:<\n{}\n>".format(response.decode()))
-            # 把响应发送给客户端
             connection.sendall(response)
         else:
             connection.sendall(b'')
 
 
 def run(host, port):
-    """
-    启动服务器
-    """
-    # 初始化 socket 套路
-    # 使用 with 可以保证程序中断的时候正确关闭 socket 释放占用的端口
     log('开始运行于', 'http://{}:{}'.format(host, port))
     with socket.socket() as s:
         s.bind((host, port))
-        # 无限循环来处理请求
-        # 监听 接受 读取请求数据 解码成字符串
-        # noinspection PyArgumentList
         s.listen()
         while True:
             connection, address = s.accept()
@@ -153,7 +134,6 @@ def run(host, port):
 
 
 if __name__ == '__main__':
-    # 生成配置并且运行程序
     config = dict(
         host='localhost',
         port=3000,
