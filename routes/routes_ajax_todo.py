@@ -8,9 +8,6 @@ from utils import log
 
 
 def index(request):
-    """
-    todo 首页的路由函数
-    """
     u = current_user(request)
     return html_response('ajax_todo_index.html')
 

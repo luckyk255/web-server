@@ -125,6 +125,7 @@ def run(host, port):
     log('开始运行于', 'http://{}:{}'.format(host, port))
     with socket.socket() as s:
         s.bind((host, port))
+        log('监听端口')
         s.listen()
         while True:
             connection, address = s.accept()

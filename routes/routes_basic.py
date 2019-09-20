@@ -74,7 +74,7 @@ def json_response(data):
 def login_required(route_function):
     
     def f(request):
-        log('用户登录权限认证')
+        log('权限认证 用户登录')
         log('login_required', route_function)
         u = current_user(request)
         if u.is_guest():

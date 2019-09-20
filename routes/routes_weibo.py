@@ -92,6 +92,7 @@ def comment_update(request):
 
 def weibo_owner_required(route_function):
     def f(request):
+        log('权限认证 微博所有者')
         log('weibo_owner_required')
         u = current_user(request)
         id_key = 'weibo_id'
@@ -114,6 +115,7 @@ def weibo_owner_required(route_function):
 
 def comment_owner_required(route_function):
     def f(request):
+        log('权限认证 评论所有者')
         log('comment_owner_required')
         u = current_user(request)
         id_key = 'comment_id'
@@ -134,6 +136,7 @@ def comment_owner_required(route_function):
 
 def comment_or_weibo_owner_required(route_function):
     def f(request):
+        log('权限认证 评论或者微博所有者')
         log('comment_or_weibo_owner_required')
         if request.method == 'GET':
             data = request.query

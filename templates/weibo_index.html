@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>weibo</title>
+    <title>Weibo</title>
     <style>
         .comment {
             border: 1px red solid;
@@ -11,6 +11,8 @@
 </head>
 <body>
 <form action="/weibo/add" method="post">
+    <span>{{ user.username }} 的微博</span>
+    <br>
     <input name="content" autocomplete="off">
     <br>
     <button type="submit">发表新微博</button>
@@ -18,14 +20,15 @@
 
 {% for w in weibos %}
     <p>
-        {{ w.content }} from {{ w.user() }}
-        <a href="/weibo/delete?weibo_id={{ w.id }}">删除</a>
-        <a href="/weibo/edit?weibo_id={{ w.id }}">修改</a>
+        Weibo:  <br> {{ w.content }} from {{ w.user().username }}
+        <a href="/weibo/delete?weibo_id={{ w.id }}">delete</a>
+        <a href="/weibo/edit?weibo_id={{ w.id }}">edit</a>
+
         {% for c in w.comments() %}
             <div class="comment">
-                {{ c.user().username }} : {{ c.content }}
-                <a href="/comment/delete?comment_id={{ c.id }}">删除</a>
-                <a href="/comment/edit?comment_id={{ c.id }}">修改</a>
+                Comment <br>{{ c.user().username }} : {{ c.content }}
+                <a href="/comment/delete?comment_id={{ c.id }}">delete</a>
+                <a href="/comment/edit?comment_id={{ c.id }}">edit</a>
             </div>
         {% endfor %}
     <form action="/comment/add" method="post">
